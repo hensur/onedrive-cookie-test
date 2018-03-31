@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<S:Envelope xmlns:S="http://www.w3.org/2003/05/soap-envelope" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+  <S:Header>
+    <wsa:Action xmlns:S="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="Action" S:mustUnderstand="1">http://schemas.xmlsoap.org/ws/2005/02/trust/RSTR/Issue</wsa:Action>
+    <wsa:To xmlns:S="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="To" S:mustUnderstand="1">http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+    <wsse:Security S:mustUnderstand="1">
+      <wsu:Timestamp xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="TS">
+        <wsu:Created>2018-03-27T23:40:46Z</wsu:Created>
+        <wsu:Expires>2018-03-27T23:45:46Z</wsu:Expires>
+      </wsu:Timestamp>
+    </wsse:Security>
+  </S:Header>
+  <S:Body>
+    <wst:RequestSecurityTokenResponse xmlns:S="http://www.w3.org/2003/05/soap-envelope" xmlns:wst="http://schemas.xmlsoap.org/ws/2005/02/trust" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:psf="http://schemas.microsoft.com/Passport/SoapServices/SOAPFault">
+      <wst:TokenType>urn:passport:compact</wst:TokenType>
+      <wsp:AppliesTo xmlns:wsa="http://www.w3.org/2005/08/addressing">
+        <wsa:EndpointReference>
+          <wsa:Address>ENDPOINT_ADDRESS_IS_HERE</wsa:Address>
+        </wsa:EndpointReference>
+      </wsp:AppliesTo>
+      <wst:Lifetime>
+        <wsu:Created>2018-03-27T23:40:46Z</wsu:Created>
+        <wsu:Expires>2018-03-28T23:40:46Z</wsu:Expires>
+      </wst:Lifetime>
+      <wst:RequestedSecurityToken>
+        <wsse:BinarySecurityToken Id="Compact0">TOKEN_IS_HERE</wsse:BinarySecurityToken>
+      </wst:RequestedSecurityToken>
+      <wst:RequestedAttachedReference>
+        <wsse:SecurityTokenReference>
+          <wsse:Reference URI="hEgf2vetMcvkH1n3z1lNFz62Ix0="/>
+        </wsse:SecurityTokenReference>
+      </wst:RequestedAttachedReference>
+      <wst:RequestedUnattachedReference>
+        <wsse:SecurityTokenReference>
+          <wsse:Reference URI="hEgf2vetMcvkH1n3z1lNFz62Ix0="/>
+        </wsse:SecurityTokenReference>
+      </wst:RequestedUnattachedReference>
+    </wst:RequestSecurityTokenResponse>
+  </S:Body>
+</S:Envelope>

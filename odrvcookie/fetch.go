@@ -124,7 +124,6 @@ func (ca *CookieAuth) getSPCookie(conf *SuccessResponse) (CookieResponse, error)
 	cookieResponse := CookieResponse{}
 	for _, cookie := range jar.Cookies(u) {
 		if (cookie.Name == "rtFa") || (cookie.Name == "FedAuth") {
-			log.Println(cookie.Name + "=" + cookie.Value + ";")
 			switch cookie.Name {
 			case "rtFa":
 				cookieResponse.RtFa = *cookie

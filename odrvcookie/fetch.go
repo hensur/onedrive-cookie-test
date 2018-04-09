@@ -127,7 +127,7 @@ func (ca *CookieAuth) getSPCookie(conf *SuccessResponse) (CookieResponse, error)
 			log.Println(cookie.Name + "=" + cookie.Value + ";")
 			switch cookie.Name {
 			case "rtFa":
-				cookieResponse.rtFa = *cookie
+				cookieResponse.RtFa = *cookie
 			case "FedAuth":
 				cookieResponse.FedAuth = *cookie
 			}

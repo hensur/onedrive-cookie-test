@@ -25,7 +25,7 @@ type CookieAuth struct {
 
 // CookieResponse contains the requested cookies
 type CookieResponse struct {
-	rtFa    http.Cookie
+	RtFa    http.Cookie
 	FedAuth http.Cookie
 }
 

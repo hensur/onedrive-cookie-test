@@ -87,7 +87,8 @@ func New(pUser, pPass, pEndpoint string) CookieAuth {
 	return retStruct
 }
 
-// Cookies returns the requested cookies in a struct
+// Cookies creates a CookieResponse. It fetches the auth token and then
+// retrieves the Cookies
 func (ca *CookieAuth) Cookies() (CookieResponse, error) {
 	return ca.getSPCookie(ca.getSPToken())
 }
@@ -98,7 +99,6 @@ func (ca *CookieAuth) getSPCookie(conf *SuccessResponse) (CookieResponse, error)
 		panic(err)
 	}
 
-	// Create the endpoint URL
 	u, err := url.Parse("https://" + spRoot.Host + "/_forms/default.aspx?wa=wsignin1.0")
 	if err != nil {
 		log.Fatal(err)
@@ -111,12 +111,11 @@ func (ca *CookieAuth) getSPCookie(conf *SuccessResponse) (CookieResponse, error)
 		log.Fatal(err)
 	}
 
-	// New Client with cookieJar
 	client := &http.Client{
 		Jar: jar,
 	}
 
-	// Send the Token as a Post request
+	// Send the previously aquired Token as a Post parameter
 	if _, err = client.Post(u.String(), "text/xml", strings.NewReader(conf.Succ.Token)); err != nil {
 		log.Fatal(err)
 	}
@@ -136,29 +135,26 @@ func (ca *CookieAuth) getSPCookie(conf *SuccessResponse) (CookieResponse, error)
 }
 
 func (ca *CookieAuth) getSPToken() *SuccessResponse {
-	// Create map for the request Template
 	reqData := map[string]interface{}{
 		"Username": ca.user,
 		"Password": ca.pass,
 		"Address":  ca.endpoint,
 	}
 
-	// Parse reqString as template
 	t := template.Must(template.New("authXML").Parse(reqString))
 
-	// Fill template and supply buffer to http Request
 	buf := &bytes.Buffer{}
 	if err := t.Execute(buf, reqData); err != nil {
 		panic(err)
 	}
 
 	// Execute the first request which gives us an auth token for the sharepoint service
+	// With this token we can authenticate on the login page and save the returned cookies
 	req, err := http.NewRequest("POST", "https://login.microsoftonline.com/extSTS.srf", buf)
 	if err != nil {
 		panic(err)
 	}
 
-	// New Client to execute the request
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -166,12 +162,10 @@ func (ca *CookieAuth) getSPToken() *SuccessResponse {
 	}
 	defer resp.Body.Close()
 
-	// Convert the response to string
 	respBuf := bytes.Buffer{}
 	respBuf.ReadFrom(resp.Body)
 	s := respBuf.Bytes()
 
-	// Try to unmarshal response into XML which contains the auth Token
 	var conf SuccessResponse
 	err = xml.Unmarshal(s, &conf)
 	if err != nil {
